@@ -1,0 +1,394 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>
+<title>Research Studio Journey</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a trunk timeline at the top, then one branch card per team, each with a milestone rail */
+:root{--bg:#F6F8FA;--panel:#FFFFFF;--ink:#16202A;--muted:#5A6878;--line:#D7DEE6;--accent:#1F5FA8;--accent-soft:#E4EEF9;--ok:#2E7D4F;--ok-soft:#E3F2E8;--due:#9A6A14;--due-soft:#FBF1DE;--priv:#8A2D3B;--priv-soft:#F8E8EB;
+--display:"Space Grotesk",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F151C;--panel:#16202A;--ink:#E6ECF2;--muted:#9AA8B8;--line:#2A3846;--accent:#7FB1EC;--accent-soft:#1B2C40;--ok:#7CCB9A;--ok-soft:#173226;--due:#E2B65C;--due-soft:#33281A;--priv:#E59AA7;--priv-soft:#3A1E24;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F151C;--panel:#16202A;--ink:#E6ECF2;--muted:#9AA8B8;--line:#2A3846;--accent:#7FB1EC;--accent-soft:#1B2C40;--ok:#7CCB9A;--ok-soft:#173226;--due:#E2B65C;--due-soft:#33281A;--priv:#E59AA7;--priv-soft:#3A1E24;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding-block:32px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1,h2,h3,h4{font-family:var(--display);margin:0;text-wrap:balance}
+h1{font-size:clamp(28px,4vw,40px);letter-spacing:-.01em}
+h2{font-size:22px} h3{font-size:19px} h4{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.lede{max-width:68ch;color:var(--muted);margin:8px 0 0}
+.banner{background:var(--priv-soft);color:var(--priv);padding:10px 14px;border-radius:8px;font-weight:600;margin:0}
+.trunk{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:16px}
+.tl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tl li{border-top:3px solid var(--accent);padding-top:8px;display:grid;gap:2px}
+.tl .d{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.tl .t{font-weight:600} .tl .s{font-size:13px;color:var(--muted)}
+.tree{display:grid;gap:10px}
+.root{font-family:var(--display);font-weight:600;font-size:17px}
+.branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;position:relative;padding-top:14px;border-top:2px solid var(--line)}
+.br{display:grid;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink);background:var(--bg)}
+.br:hover,.br:focus-visible{border-color:var(--accent);outline:none}
+.br b{font-family:var(--mono);color:var(--accent)} .br span{font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.kpi{padding:12px 14px;background:var(--accent-soft);border-radius:8px}
+.kpi b{display:block;font-family:var(--display);font-size:22px} .kpi span{font-size:13px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+.tw{overflow-x:auto}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.n{text-align:right;font-family:var(--mono)}
+.teams{display:grid;gap:18px}
+.team{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:14px;scroll-margin-top:16px}
+.team header{display:flex;gap:14px;align-items:center}
+.tid{font-family:var(--mono);font-weight:500;font-size:18px;background:var(--accent);color:var(--panel);border-radius:8px;padding:8px 10px;flex:none}
+.tool{margin:2px 0 0;color:var(--muted);font-size:14px}
+.members{margin:0;font-size:14px}
+.q{margin:0;max-width:75ch} .lbl{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:600;margin-right:8px}
+.rail{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.ms{display:grid;gap:1px;padding:8px;border-radius:8px;font-size:12px;min-width:0}
+.ms.done{background:var(--ok-soft)} .ms.due{background:var(--due-soft)}
+.ms .mk{font-family:var(--mono);font-weight:500} .ms.done .mk{color:var(--ok)} .ms.due .mk{color:var(--due)}
+.ms .ml{font-weight:600;overflow-wrap:anywhere} .ms .md{color:var(--muted)}
+.dot{display:none}
+.cols{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+.cols>section,.next{display:grid;gap:6px;min-width:0}
+ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.ext{list-style:none;padding:0;gap:8px}
+.ext li{display:grid;grid-template-columns:44px 1fr;column-gap:8px;border-left:2px solid var(--line);padding-left:10px}
+.ext .d{font-family:var(--mono);font-size:12px;color:var(--accent);grid-row:span 2}
+.ext .s{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.ext .x{font-size:14px}
+.priv{background:var(--priv-soft);border-radius:8px;padding:12px 14px;display:grid;gap:6px}
+.priv h4{color:var(--priv)} .grades{margin:0;font-family:var(--mono);font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend .l1::before{background:var(--ok)} .legend .l2::before{background:var(--due)}
+footer{color:var(--muted);font-size:13px}
+.top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;align-items:start}
+.kit{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:10px}
+.kit h2{font-size:17px} .kit p{margin:0;font-size:13px;color:var(--muted)}
+.kg{display:grid;gap:4px} .chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12.5px;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--ink);white-space:nowrap}
+.scopebox{display:grid;gap:10px;margin-top:22px}
+.scope{display:grid;grid-template-columns:1fr 18px 1fr;gap:14px;align-items:stretch}
+.sc{border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:6px;align-content:start;background:var(--bg)}
+.sc.fin{border-color:var(--accent)} .sc .d{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.sc ul{font-size:13.5px} .arrow{align-self:center;font-family:var(--mono);color:var(--muted);font-size:16px}
+@media (max-width:820px){.top{grid-template-columns:1fr}.scope{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}}
+.upd{font-family:var(--mono);font-size:12px;color:var(--muted);margin:6px 0 0}
+.finds{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;list-style:none;margin:0;padding:0}
+.finds li{background:var(--accent-soft);border-radius:10px;padding:12px 14px;display:grid;gap:4px}
+.finds b{font-family:var(--display);font-size:16px} .finds span{font-size:13.5px;color:var(--muted)}
+.road{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.road li{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.road li:last-child{border-bottom:0}
+.road .d{font-family:var(--mono);font-size:13px;color:var(--due)} .road .t{font-weight:600} .road .s{font-size:14px;color:var(--muted)}
+@media (max-width:520px){.road li{grid-template-columns:1fr;gap:2px}}
+
+:root{--c1:#1F5FA8;--c2:#0E8A7B;--c3:#C2541B;--c4:#7A4FB5;--c5:#B3367A;--c6:#4E7A12;--c7:#A07A00;--pivot:#D9822B}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c1:#7FB1EC;--c2:#4FD1BE;--c3:#F08A55;--c4:#B596E8;--c5:#EE7DB9;--c6:#9BCB5C;--c7:#E3C25A;--pivot:#F2A95E}}
+:root[data-theme="dark"]{--c1:#7FB1EC;--c2:#4FD1BE;--c3:#F08A55;--c4:#B596E8;--c5:#EE7DB9;--c6:#9BCB5C;--c7:#E3C25A;--pivot:#F2A95E}
+.metrowrap{overflow-x:auto;border-radius:12px;background:var(--panel);border:1px solid var(--line);padding:14px 6px}
+.metro{display:block;font-family:var(--body)}
+.metro .grid{stroke:var(--line);stroke-width:1}
+.metro .ax{fill:var(--muted);font-family:var(--mono);font-size:11px}
+.metro .shared{stroke:var(--accent);stroke-width:1;stroke-dasharray:4 4;opacity:.6}
+.metro .sharedt{fill:var(--accent);font-size:10.5px;font-weight:600}
+.metro .today{stroke:var(--ink);stroke-width:1.5}
+.metro .todayt{fill:var(--ink);paint-order:stroke;stroke:var(--panel);stroke-width:4px;font-family:var(--mono);font-size:11px;font-weight:600}
+.metro .trunk{stroke-width:4;stroke-linecap:round}
+.metro .future{stroke-width:3;stroke-dasharray:3 5;opacity:.45}
+.metro .tid{font-family:var(--display);font-weight:700;font-size:20px}
+.metro .tname{fill:var(--muted);font-size:11.5px}
+.metro .lab{fill:var(--ink);font-size:11.5px;paint-order:stroke;stroke:var(--panel);stroke-width:4px;stroke-linejoin:round}
+.metro .lab.next{fill:var(--muted)} .metro .lab.pivot{font-weight:600}
+.metro .stn{cursor:default} .metro .stn:hover .lab{text-decoration:underline}
+.mlegend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.mlegend span{display:inline-flex;align-items:center;gap:6px}
+
+@media (max-width:760px){.cols{grid-template-columns:1fr}.rail{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:420px){.rail{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<div class="wrap">
+
+<div class="top">
+<header>
+<h1>Research Studio Journey</h1>
+<p class="upd">Last updated 25 November 2026</p>
+<p class="lede">MAE 494/564 Advanced Aerodynamics, Fall 2026. On October 7 the class replaced Homeworks 3 to 5 with one shared research project: six teams benchmark low-cost aerodynamic tools on the same airfoil against the same wind-tunnel data, and a seventh team validates full-car CFD for Sun Devil Motorsports. This page traces each team from its first proposal to where it stands today.</p>
+<section class="scopebox" aria-labelledby="t5">
+<h2 id="t5" style="font-size:17px">How the scope narrowed</h2>
+<div class="scope">
+<div class="sc"><span class="d">Draft specification · October</span><b>Four airfoils, four angles</b><ul>
+<li>E387, SD7003, SD7037 and S1223</li><li>Re = 1, 2, 3 × 10⁵ for every tool</li><li>CFD at 0°, 4°, 8° and 12°</li><li>A separate machine-learning paper, folded into A6</li></ul></div>
+<div class="arrow" aria-hidden="true">→</div>
+<div class="sc fin"><span class="d">Locked 11/7</span><b>One airfoil done well, plus a stress case</b><ul>
+<li>E387 at three Re: the common case every tool must deliver</li><li>S1223 as the stress case, for the low-order and machine-learning tools</li><li>Extensions sized to what each team can finish by 12/9</li><li>Extra cases count only if complete</li></ul></div>
+</div>
+<p style="margin:0;font-size:13px;color:var(--muted)">Two independent tunnel data sets exist for the E387 across the whole range, so every comparison rests on measured numbers. A narrower scope bought converged results instead of many unfinished ones.</p>
+</section>
+</header>
+<aside class="kit" aria-labelledby="tk"><h2 id="tk">The toolbox students picked up</h2><div class="kg"><h4>Solvers</h4><div class="chips"><span class="chip">Own vortex-panel code</span><span class="chip">XFOIL</span><span class="chip">NeuralFoil</span><span class="chip">Ansys Fluent</span><span class="chip">STAR-CCM+</span><span class="chip">Own neural network</span></div></div><div class="kg"><h4>Data and geometry</h4><div class="chips"><span class="chip">NASA Langley LTPT</span><span class="chip">UIUC low-speed tunnel</span><span class="chip">UIUC airfoil coordinates</span><span class="chip">Ford tunnel (F1)</span></div></div><div class="kg"><h4>Methods</h4><div class="chips"><span class="chip">Mesh and panel convergence</span><span class="chip">y⁺ and prism layers</span><span class="chip">Transition SST (γ–Re<sub>θ</sub>)</span><span class="chip">e<sup>N</sup> and Ncrit</span><span class="chip">CST shape parameters</span><span class="chip">Uncertainty bands</span></div></div><div class="kg"><h4>Research workflow</h4><div class="chips"><span class="chip">Overleaf and LaTeX</span><span class="chip">Zotero</span><span class="chip">GitHub, one branch per team</span><span class="chip">Shared Drive</span><span class="chip">Journal club</span><span class="chip">Peer review</span><span class="chip">AIAA abstract</span></div></div><p>Five in-class toolkits (panels, XFOIL, CFD, machine learning, paper writing) introduced these; each team went deep on one.</p></aside>
+</div>
+
+<section class="trunk" aria-labelledby="tf">
+<h2 id="tf">What we have learned so far</h2>
+<ul class="finds">
+<li><b>Viscosity fixes most of the lift error</b><span>The inviscid panel code is 12.5% high in lift; XFOIL and NeuralFoil cut that to about 7%.</span></li>
+<li><b>A laminar region fixes the drag</b><span>Fully turbulent CFD is 20–25% high in drag; the transition model brings Fluent within about 1%.</span></li>
+<li><b>Two codes agree, so the model is the limit</b><span>Fluent and STAR-CCM+ with matched settings agree within 3–5% in drag, so the remaining error comes from the turbulence model, not the code.</span></li>
+<li><b>A surrogate inherits its teacher's errors</b><span>NeuralFoil matches XFOIL to within 0.5%, including where XFOIL is wrong.</span></li>
+</ul>
+<p style="margin:0;font-size:13px;color:var(--muted)">E387, Re = 2 × 10⁵, α = 4°, from the 18 November drafts. After the showcase, these will be replaced by each team's own conclusion sentence.</p>
+</section>
+
+<section aria-labelledby="t0" style="display:grid;gap:10px">
+<h2 id="t0">Seven teams, seven weeks</h2>
+<p class="lede" style="margin:0">Time runs down the page from October 7. Each line is a team; hover a station for details, or click a team name to jump to its card.</p>
+<div class="mlegend"><span><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="var(--c1)"/></svg>Milestone submitted</span><span><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="var(--panel)" stroke="var(--c1)" stroke-width="2.5"/></svg>Result delivered</span><span><svg width="14" height="14"><rect x="3" y="3" width="8" height="8" transform="rotate(45 7 7)" fill="var(--pivot)"/></svg>Scope change</span><span><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2"/></svg>Coming up</span></div>
+<div class="metrowrap"><svg viewBox="0 0 1063 1197" width="1063" height="1197" role="img" aria-label="Timeline of each team from October 7 to December 9" class="metro">
+<line x1="58" x2="1059" y1="86" y2="86" class="grid"/><text x="52" y="90" class="ax" text-anchor="end">10/7</text>
+<line x1="58" x2="1059" y1="205" y2="205" class="grid"/><text x="52" y="209" class="ax" text-anchor="end">10/14</text>
+<line x1="58" x2="1059" y1="324" y2="324" class="grid"/><text x="52" y="328" class="ax" text-anchor="end">10/21</text>
+<line x1="58" x2="1059" y1="443" y2="443" class="grid"/><text x="52" y="447" class="ax" text-anchor="end">10/28</text>
+<line x1="58" x2="1059" y1="562" y2="562" class="grid"/><text x="52" y="566" class="ax" text-anchor="end">11/4</text>
+<line x1="58" x2="1059" y1="681" y2="681" class="grid"/><text x="52" y="685" class="ax" text-anchor="end">11/11</text>
+<line x1="58" x2="1059" y1="800" y2="800" class="grid"/><text x="52" y="804" class="ax" text-anchor="end">11/18</text>
+<line x1="58" x2="1059" y1="919" y2="919" class="grid"/>
+<line x1="58" x2="1059" y1="1038" y2="1038" class="grid"/><text x="52" y="1042" class="ax" text-anchor="end">12/2</text>
+<line x1="58" x2="1059" y1="1157" y2="1157" class="grid"/><text x="52" y="1161" class="ax" text-anchor="end">12/9</text>
+<line x1="58" x2="1059" y1="86" y2="86" class="shared"/><text x="52" y="102" class="sharedt" text-anchor="end">Studio</text><text x="52" y="114" class="sharedt" text-anchor="end">starts</text>
+<line x1="58" x2="1059" y1="205" y2="205" class="shared"/><text x="52" y="221" class="sharedt" text-anchor="end">Teams</text><text x="52" y="233" class="sharedt" text-anchor="end">formed</text>
+<line x1="58" x2="1059" y1="698" y2="698" class="shared"/><text x="52" y="714" class="sharedt" text-anchor="end">Abstract</text><text x="52" y="726" class="sharedt" text-anchor="end">submitted</text>
+<line x1="58" x2="1059" y1="919" y2="919" class="today"/><text x="52" y="923" class="todayt" text-anchor="end">Today</text>
+<a href="#A1"><text x="80" y="42" class="tid" fill="var(--c1)">A1</text></a><text x="80" y="58" class="tname">Panel method</text>
+<line x1="80" x2="80" y1="205" y2="919" stroke="var(--c1)" class="trunk"/><line x1="80" x2="80" y1="919" y2="1157" stroke="var(--c1)" class="future"/>
+<circle cx="80" cy="205" r="4" fill="var(--c1)"/>
+<g class="stn"><title>A1 — 10/21: Journal-club talk</title><circle cx="80" cy="324" r="5.5" fill="var(--c1)" class="st"/><text x="91" y="328" class="lab ms">Journal club</text></g>
+<g class="stn"><title>A1 — 10/23: Extension proposed: flapped airfoils and blunt bodies</title><circle cx="80" cy="358" r="5.5" fill="var(--c1)" class="st"/><text x="91" y="362" class="lab ms">M1 proposal</text></g>
+<g class="stn"><title>A1 — 10/26: Extension narrowed to flap deflection</title><rect x="75" y="404" width="10" height="10" transform="rotate(45 80 409)" fill="var(--pivot)" class="st"/><text x="91" y="413" class="lab pivot">Flaps only</text></g>
+<g class="stn"><title>A1 — 11/4: Code verified within 0.2% of inviscid XFOIL</title><circle cx="80" cy="562" r="5.5" fill="var(--c1)" class="st"/><text x="91" y="566" class="lab ms">M3 memo</text></g>
+<g class="stn"><title>A1 — 11/18: Pressure distribution vs NASA shows the bubble</title><circle cx="80" cy="800" r="5.5" fill="var(--c1)" class="st"/><text x="91" y="804" class="lab ms">M4 draft</text></g>
+<g class="stn"><title>A1 — 11/23: Digitized NASA pressure data shared with A3</title><circle cx="80" cy="885" r="5.5" fill="var(--panel)" stroke="var(--c1)" stroke-width="2.5" class="st"/><text x="91" y="889" class="lab result">NASA Cp shared</text></g>
+<g class="stn"><title>A1 — 11/24: Extension reduced to lift error vs camber</title><rect x="75" y="897" width="10" height="10" transform="rotate(45 80 902)" fill="var(--pivot)" class="st"/><text x="91" y="906" class="lab pivot">Camber study</text></g>
+<g class="stn"><title>A1 — 11/30: Showcase</title><circle cx="80" cy="1004" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="91" y="1008" class="lab next">Showcase</text></g>
+<g class="stn"><title>A1 — 12/9: Final package</title><circle cx="80" cy="1157" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="91" y="1161" class="lab next">Final package</text></g>
+<a href="#A2"><text x="221" y="42" class="tid" fill="var(--c2)">A2</text></a><text x="221" y="58" class="tname">XFOIL</text>
+<line x1="221" x2="221" y1="205" y2="919" stroke="var(--c2)" class="trunk"/><line x1="221" x2="221" y1="919" y2="1157" stroke="var(--c2)" class="future"/>
+<circle cx="221" cy="205" r="4" fill="var(--c2)"/>
+<g class="stn"><title>A2 — 10/21: Journal-club talk (Drela 1989, XFOIL)</title><circle cx="221" cy="324" r="5.5" fill="var(--c2)" class="st"/><text x="232" y="328" class="lab ms">Journal club</text></g>
+<g class="stn"><title>A2 — 10/23: Extension proposed: diamond airfoils at sonic speed</title><circle cx="221" cy="358" r="5.5" fill="var(--c2)" class="st"/><text x="232" y="362" class="lab ms">M1 proposal</text></g>
+<g class="stn"><title>A2 — 10/26: Extension changed to a NACA 0012 Mach sweep</title><rect x="216" y="404" width="10" height="10" transform="rotate(45 221 409)" fill="var(--pivot)" class="st"/><text x="232" y="413" class="lab pivot">Mach sweep</text></g>
+<g class="stn"><title>A2 — 11/4: Ncrit sweep at three Re</title><circle cx="221" cy="562" r="5.5" fill="var(--c2)" class="st"/><text x="232" y="566" class="lab ms">M3 memo</text></g>
+<g class="stn"><title>A2 — 11/18: E387 and S1223 tables at three Re</title><circle cx="221" cy="800" r="5.5" fill="var(--c2)" class="st"/><text x="232" y="804" class="lab ms">M4 draft</text></g>
+<g class="stn"><title>A2 — 11/25: Drag and transition vs angle for Ncrit 5 to 11</title><circle cx="221" cy="919" r="5.5" fill="var(--panel)" stroke="var(--c2)" stroke-width="2.5" class="st"/><text x="232" y="935" class="lab result">Ncrit figure</text></g>
+<g class="stn"><title>A2 — 11/30: Showcase</title><circle cx="221" cy="1004" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="232" y="1008" class="lab next">Showcase</text></g>
+<g class="stn"><title>A2 — 12/9: Final package</title><circle cx="221" cy="1157" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="232" y="1161" class="lab next">Final package</text></g>
+<a href="#A3"><text x="362" y="42" class="tid" fill="var(--c3)">A3</text></a><text x="362" y="58" class="tname">Fluent</text>
+<line x1="362" x2="362" y1="205" y2="919" stroke="var(--c3)" class="trunk"/><line x1="362" x2="362" y1="919" y2="1157" stroke="var(--c3)" class="future"/>
+<circle cx="362" cy="205" r="4" fill="var(--c3)"/>
+<g class="stn"><title>A3 — 10/23: Extension proposed: mountain effect</title><circle cx="362" cy="358" r="5.5" fill="var(--c3)" class="st"/><text x="373" y="362" class="lab ms">M1 proposal</text></g>
+<g class="stn"><title>A3 — 10/28: Extension became an inlet turbulence sweep</title><rect x="357" y="438" width="10" height="10" transform="rotate(45 362 443)" fill="var(--pivot)" class="st"/><text x="373" y="447" class="lab pivot">Turbulence sweep</text></g>
+<g class="stn"><title>A3 — 11/4: Transition model within about 1% of NASA drag; 11/4: Journal-club talk</title><circle cx="362" cy="562" r="5.5" fill="var(--c3)" class="st"/><text x="373" y="566" class="lab ms">M3 memo · talk</text></g>
+<g class="stn"><title>A3 — 11/15: Systematic mesh study; drag converges</title><circle cx="362" cy="749" r="5.5" fill="var(--panel)" stroke="var(--c3)" stroke-width="2.5" class="st"/><text x="373" y="753" class="lab result">Mesh rebuilt</text></g>
+<g class="stn"><title>A3 — 11/18: Both models, four angles, three Re</title><circle cx="362" cy="800" r="5.5" fill="var(--c3)" class="st"/><text x="373" y="804" class="lab ms">M4 draft</text></g>
+<g class="stn"><title>A3 — 11/22: Extension reduced to Tu = 1% and 5%</title><rect x="357" y="863" width="10" height="10" transform="rotate(45 362 868)" fill="var(--pivot)" class="st"/><text x="373" y="872" class="lab pivot">Two Tu levels</text></g>
+<g class="stn"><title>A3 — 11/23: Pressure plots at three Re on GitHub</title><circle cx="362" cy="885" r="5.5" fill="var(--panel)" stroke="var(--c3)" stroke-width="2.5" class="st"/><text x="373" y="889" class="lab result">Cp plots</text></g>
+<g class="stn"><title>A3 — 12/2: Showcase</title><circle cx="362" cy="1038" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="373" y="1042" class="lab next">Showcase</text></g>
+<g class="stn"><title>A3 — 12/9: Final package</title><circle cx="362" cy="1157" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="373" y="1161" class="lab next">Final package</text></g>
+<a href="#A4"><text x="503" y="42" class="tid" fill="var(--c4)">A4</text></a><text x="503" y="58" class="tname">STAR-CCM+</text>
+<line x1="503" x2="503" y1="205" y2="919" stroke="var(--c4)" class="trunk"/><line x1="503" x2="503" y1="919" y2="1157" stroke="var(--c4)" class="future"/>
+<circle cx="503" cy="205" r="4" fill="var(--c4)"/>
+<g class="stn"><title>A4 — 10/23: Extension proposed: propeller or turbine</title><circle cx="503" cy="358" r="5.5" fill="var(--c4)" class="st"/><text x="514" y="362" class="lab ms">M1 proposal</text></g>
+<g class="stn"><title>A4 — 11/2: Switched from SU2 to STAR-CCM+</title><rect x="498" y="523" width="10" height="10" transform="rotate(45 503 528)" fill="var(--pivot)" class="st"/><text x="514" y="532" class="lab pivot">SU2 to STAR</text></g>
+<g class="stn"><title>A4 — 11/4: Both models on three meshes; 11/4: Journal-club talk</title><circle cx="503" cy="562" r="5.5" fill="var(--c4)" class="st"/><text x="514" y="566" class="lab ms">M3 memo · talk</text></g>
+<g class="stn"><title>A4 — 11/9: Higher angles counted as core scope</title><rect x="498" y="642" width="10" height="10" transform="rotate(45 503 647)" fill="var(--pivot)" class="st"/><text x="514" y="651" class="lab pivot">8° and 12° core</text></g>
+<g class="stn"><title>A4 — 11/15: Settings matched to A3 for code-to-code</title><circle cx="503" cy="749" r="5.5" fill="var(--panel)" stroke="var(--c4)" stroke-width="2.5" class="st"/><text x="514" y="753" class="lab result">Matched to A3</text></g>
+<g class="stn"><title>A4 — 11/18: Two codes agree within 3–5% in drag</title><circle cx="503" cy="800" r="5.5" fill="var(--c4)" class="st"/><text x="514" y="804" class="lab ms">M4 draft</text></g>
+<g class="stn"><title>A4 — 11/24: Transition runs focused on 4° at three Re</title><rect x="498" y="897" width="10" height="10" transform="rotate(45 503 902)" fill="var(--pivot)" class="st"/><text x="514" y="906" class="lab pivot">Transition at 4°</text></g>
+<g class="stn"><title>A4 — 12/2: Showcase</title><circle cx="503" cy="1038" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="514" y="1042" class="lab next">Showcase</text></g>
+<g class="stn"><title>A4 — 12/9: Final package</title><circle cx="503" cy="1157" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="514" y="1161" class="lab next">Final package</text></g>
+<a href="#A5"><text x="644" y="42" class="tid" fill="var(--c5)">A5</text></a><text x="644" y="58" class="tname">Data + NeuralFoil</text>
+<line x1="644" x2="644" y1="205" y2="919" stroke="var(--c5)" class="trunk"/><line x1="644" x2="644" y1="919" y2="1157" stroke="var(--c5)" class="future"/>
+<circle cx="644" cy="205" r="4" fill="var(--c5)"/>
+<g class="stn"><title>A5 — 10/23: Extension: tunnel-to-tunnel consistency</title><circle cx="644" cy="358" r="5.5" fill="var(--c5)" class="st"/><text x="655" y="362" class="lab ms">M1 proposal</text></g>
+<g class="stn"><title>A5 — 10/28: NASA and UIUC data delivered to all teams; 10/28: Journal-club talk</title><circle cx="644" cy="443" r="5.5" fill="var(--panel)" stroke="var(--c5)" stroke-width="2.5" class="st"/><text x="655" y="447" class="lab result">E387 data · talk</text></g>
+<g class="stn"><title>A5 — 11/4: NASA vs UIUC comparison</title><circle cx="644" cy="562" r="5.5" fill="var(--c5)" class="st"/><text x="655" y="566" class="lab ms">M3 memo</text></g>
+<g class="stn"><title>A5 — 11/18: Uncertainty paragraph; NeuralFoil vs data</title><circle cx="644" cy="800" r="5.5" fill="var(--c5)" class="st"/><text x="655" y="804" class="lab ms">M4 draft</text></g>
+<g class="stn"><title>A5 — 11/22: Corrected NASA files on GitHub</title><circle cx="644" cy="868" r="5.5" fill="var(--panel)" stroke="var(--c5)" stroke-width="2.5" class="st"/><text x="655" y="872" class="lab result">Files corrected</text></g>
+<g class="stn"><title>A5 — 11/23: NeuralFoil for four airfoils at three Re</title><circle cx="644" cy="885" r="5.5" fill="var(--panel)" stroke="var(--c5)" stroke-width="2.5" class="st"/><text x="655" y="889" class="lab result">NeuralFoil ×4</text></g>
+<g class="stn"><title>A5 — 11/24: Updated S1223 UIUC files on GitHub</title><circle cx="644" cy="902" r="5.5" fill="var(--panel)" stroke="var(--c5)" stroke-width="2.5" class="st"/><text x="655" y="906" class="lab result">S1223 data</text></g>
+<g class="stn"><title>A5 — 11/30: Showcase</title><circle cx="644" cy="1004" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="655" y="1008" class="lab next">Showcase</text></g>
+<g class="stn"><title>A5 — 12/9: Final package</title><circle cx="644" cy="1157" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="655" y="1161" class="lab next">Final package</text></g>
+<a href="#A6"><text x="785" y="42" class="tid" fill="var(--c6)">A6</text></a><text x="785" y="58" class="tname">ML surrogate</text>
+<line x1="785" x2="785" y1="205" y2="919" stroke="var(--c6)" class="trunk"/><line x1="785" x2="785" y1="919" y2="1157" stroke="var(--c6)" class="future"/>
+<circle cx="785" cy="205" r="4" fill="var(--c6)"/>
+<g class="stn"><title>A6 — 10/23: Extension: uncertainty estimate</title><circle cx="785" cy="358" r="5.5" fill="var(--c6)" class="st"/><text x="796" y="362" class="lab ms">M1 proposal</text></g>
+<g class="stn"><title>A6 — 11/4: About 1,080-airfoil training set</title><circle cx="785" cy="562" r="5.5" fill="var(--c6)" class="st"/><text x="796" y="566" class="lab ms">M3 memo</text></g>
+<g class="stn"><title>A6 — 11/16: Four-number fit, 0.88% of chord</title><circle cx="785" cy="766" r="5.5" fill="var(--panel)" stroke="var(--c6)" stroke-width="2.5" class="st"/><text x="796" y="770" class="lab result">E387 fit</text></g>
+<g class="stn"><title>A6 — 11/18: Prediction with ±2σ band; 11/18: Journal-club talk</title><circle cx="785" cy="800" r="5.5" fill="var(--c6)" class="st"/><text x="796" y="804" class="lab ms">M4 draft · talk</text></g>
+<g class="stn"><title>A6 — 11/24: Four-number shape cannot represent S1223</title><circle cx="785" cy="902" r="5.5" fill="var(--panel)" stroke="var(--c6)" stroke-width="2.5" class="st"/><text x="796" y="906" class="lab result">S1223 shape</text></g>
+<g class="stn"><title>A6 — 11/25: Network predictions plotted against UIUC data</title><circle cx="785" cy="919" r="5.5" fill="var(--panel)" stroke="var(--c6)" stroke-width="2.5" class="st"/><text x="796" y="935" class="lab result">S1223 vs UIUC</text></g>
+<g class="stn"><title>A6 — 11/30: Showcase</title><circle cx="785" cy="1004" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="796" y="1008" class="lab next">Showcase</text></g>
+<g class="stn"><title>A6 — 12/9: Final package</title><circle cx="785" cy="1157" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="796" y="1161" class="lab next">Final package</text></g>
+<a href="#F1"><text x="926" y="42" class="tid" fill="var(--c7)">F1</text></a><text x="926" y="58" class="tname">Formula SAE</text>
+<line x1="926" x2="926" y1="205" y2="919" stroke="var(--c7)" class="trunk"/><line x1="926" x2="926" y1="919" y2="1157" stroke="var(--c7)" class="future"/>
+<circle cx="926" cy="205" r="4" fill="var(--c7)"/>
+<g class="stn"><title>F1 — 10/14: Formula SAE study approved as its own paper</title><rect x="921" y="200" width="10" height="10" transform="rotate(45 926 205)" fill="var(--pivot)" class="st"/><text x="937" y="209" class="lab pivot">Own project</text></g>
+<g class="stn"><title>F1 — 10/23: Extension proposed: skidpad cornering</title><circle cx="926" cy="358" r="5.5" fill="var(--c7)" class="st"/><text x="937" y="362" class="lab ms">M1 proposal</text></g>
+<g class="stn"><title>F1 — 10/28: Journal-club talk</title><circle cx="926" cy="443" r="5.5" fill="var(--c7)" class="st"/><text x="937" y="447" class="lab ms">Journal club</text></g>
+<g class="stn"><title>F1 — 11/4: Full-car CFD vs Ford tunnel</title><circle cx="926" cy="562" r="5.5" fill="var(--c7)" class="st"/><text x="937" y="566" class="lab ms">M3 memo</text></g>
+<g class="stn"><title>F1 — 11/13: Six-level mesh study converged</title><circle cx="926" cy="715" r="5.5" fill="var(--panel)" stroke="var(--c7)" stroke-width="2.5" class="st"/><text x="937" y="719" class="lab result">Mesh study</text></g>
+<g class="stn"><title>F1 — 11/16: Cornering dropped; straight-line core</title><rect x="921" y="761" width="10" height="10" transform="rotate(45 926 766)" fill="var(--pivot)" class="st"/><text x="937" y="770" class="lab pivot">Straight line</text></g>
+<g class="stn"><title>F1 — 11/18: Full paper draft</title><circle cx="926" cy="800" r="5.5" fill="var(--c7)" class="st"/><text x="937" y="804" class="lab ms">M4 draft</text></g>
+<g class="stn"><title>F1 — 12/2: Showcase</title><circle cx="926" cy="1038" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="937" y="1042" class="lab next">Showcase</text></g>
+<g class="stn"><title>F1 — 12/9: Final package</title><circle cx="926" cy="1157" r="5.5" fill="var(--panel)" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 2" class="st"/><text x="937" y="1161" class="lab next">Final package</text></g>
+</svg></div>
+</section>
+
+<section class="trunk" aria-labelledby="t1">
+<h2 id="t1">The shared path</h2>
+<ol class="tl">
+<li><span class="d">10/7</span><span class="t">Research Studio begins</span><span class="s">Replaces HW3–HW5; ranking survey</span></li>
+<li><span class="d">10/14</span><span class="t">Teams and charters</span><span class="s">Shared specification set</span></li>
+<li><span class="d">10/19–11/16</span><span class="t">Five toolkits</span><span class="s">Panels, XFOIL, CFD, ML, paper writing</span></li>
+<li><span class="d">10/21–11/18</span><span class="t">Journal clubs</span><span class="s">One talk per team</span></li>
+<li><span class="d">11/4</span><span class="t">First validation</span><span class="s">Every tool vs wind-tunnel data</span></li>
+<li><span class="d">11/12</span><span class="t">Abstract submitted</span><span class="s">AIAA AVIATION 2027</span></li>
+<li><span class="d">11/18–11/24</span><span class="t">Paper sections and peer review</span><span class="s">Each team reviews another</span></li>
+<li><span class="d">11/30, 12/2</span><span class="t">Showcase</span><span class="s">Faculty panel</span></li>
+<li><span class="d">12/9</span><span class="t">Final package</span><span class="s">Sections, data, scripts</span></li>
+</ol>
+</section>
+
+<section class="trunk tree" aria-labelledby="t2">
+<h2 id="t2">One question, seven branches</h2>
+<p class="root">Which low-cost tool can you trust, for which quantity, at low Reynolds number?<br><span style="font-family:var(--body);font-weight:400;font-size:14px;color:var(--muted)">Eppler E387 airfoil · Re = 1, 2, 3 × 10⁵ · NASA Langley and UIUC tunnel data · S1223 as the stress case</span></p>
+<nav class="branches" aria-label="Teams"><a class="br" href="#A1"><b>A1</b><span>Vortex-panel method</span></a><a class="br" href="#A2"><b>A2</b><span>XFOIL and transition</span></a><a class="br" href="#A3"><b>A3</b><span>Ansys Fluent</span></a><a class="br" href="#A4"><b>A4</b><span>STAR-CCM+</span></a><a class="br" href="#A5"><b>A5</b><span>Reference data and NeuralFoil</span></a><a class="br" href="#A6"><b>A6</b><span>Machine-learning surrogate</span></a><a class="br" href="#F1"><b>F1</b><span>Formula SAE car (separate paper)</span></a></nav>
+</section>
+
+<section class="trunk" aria-labelledby="t3">
+<h2 id="t3">What the class has produced together</h2>
+<div class="kpis">
+<div class="kpi"><b>27 students, 7 teams</b><span>One paper (A1–A6) and one validation study (F1)</span></div>
+<div class="kpi"><b>6 tools</b><span>Panel code, XFOIL, NeuralFoil, Fluent, STAR-CCM+, own neural network</span></div>
+<div class="kpi"><b>~1,080 airfoils</b><span>A6's XFOIL training set, about 15 hours of computing</span></div>
+<div class="kpi"><b>Abstract submitted</b><span>AIAA AVIATION 2027, 12 November</span></div>
+</div>
+<p style="margin:4px 0 0">E387, Re = 2 × 10⁵, α = 4°, compared with NASA (lift 0.785, drag 0.0133):</p>
+<div class="tw"><table>
+<thead><tr><th>Tool</th><th>Team</th><th>Lift</th><th>Drag</th></tr></thead>
+<tbody>
+<tr><td>Vortex-panel method (inviscid)</td><td>A1</td><td class="n">+12.5%</td><td class="n">—</td></tr>
+<tr><td>XFOIL</td><td>A2</td><td class="n">+6.5%</td><td class="n">−7.5%</td></tr>
+<tr><td>NeuralFoil</td><td>A5</td><td class="n">+7.0%</td><td class="n">−7.8%</td></tr>
+<tr><td>Fluent, fully turbulent</td><td>A3</td><td class="n">0.0%</td><td class="n">+25%</td></tr>
+<tr><td>Fluent, transition model</td><td>A3</td><td class="n">+2.4%</td><td class="n">+1.3%</td></tr>
+<tr><td>STAR-CCM+, fully turbulent</td><td>A4</td><td class="n">−0.3%</td><td class="n">+20%</td></tr>
+<tr><td>STAR-CCM+, transition model</td><td>A4</td><td class="n">+1.7%</td><td class="n">+10%*</td></tr>
+<tr><td>Own neural network</td><td>A6</td><td class="n">+13.5%</td><td class="n">in progress</td></tr>
+</tbody></table></div>
+<p style="margin:0;font-size:13px;color:var(--muted)">Values from the 18 November section drafts. *Not yet mesh-converged. Each step up in physics fixes one error: viscosity fixes most of the lift error, a laminar region fixes most of the drag error, and two independent CFD codes agree with each other.</p>
+</section>
+
+<section class="trunk" aria-labelledby="tn">
+<h2 id="tn">Where it goes from here</h2>
+<ol class="road">
+<li><span class="d">Mon 11/30</span><div><div class="t">Showcase, part 1</div><div class="s">A1, A2, A5, A6 · 3:00 PM · faculty panel · every member presents</div></div></li>
+<li><span class="d">Wed 12/2</span><div><div class="t">Showcase, part 2 and wrap-up</div><div class="s">A3, A4, F1 · 3:00 PM · faculty panel</div></div></li>
+<li><span class="d">Wed 12/9</span><div><div class="t">Final package</div><div class="s">Final sections revised after review and panel, data and scripts that reproduce one figure, one resume bullet per student</div></div></li>
+<li><span class="d">February 2027</span><div><div class="t">AIAA AVIATION 2027 decision</div><div class="s">On the abstract submitted 12 November</div></div></li>
+<li><span class="d">Spring 2027</span><div><div class="t">Finishing the paper</div><div class="s">Volunteers help turn the final sections into the full manuscript; co-authorship by contribution</div></div></li>
+<li><span class="d">4 May 2027</span><div><div class="t">Full manuscript due</div><div class="s">Paper A, AIAA AVIATION 2027</div></div></li>
+</ol>
+<p style="margin:0;font-size:13px;color:var(--muted)">F1 delivers its validation study as a paper-format report at M6. Its results belong to Sun Devil Motorsports, and any further work continues within the club.</p>
+</section>
+
+<section aria-labelledby="t4" style="display:grid;gap:12px">
+<h2 id="t4">Each team, from proposal to today</h2>
+<div class="legend"><span class="l1">Submitted</span><span class="l2">Coming up</span></div>
+<div class="teams"><article class="team" id="A1">
+<header><span class="tid">A1</span><div><h3>Vortex-panel method</h3><p class="tool">Own vortex-panel code (inviscid)</p></div></header>
+
+<p class="q"><span class="lbl">Question</span>How much of a low-cost inviscid method&#x27;s error comes from neglecting viscosity?</p>
+<p class="q"><span class="lbl">Journal club</span>Hess &amp; Smith (1967), the first general panel method</p>
+<ol class="rail"><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M1</span><span class="ml">Proposal</span><span class="md">10/23</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M2</span><span class="ml">Journal club</span><span class="md">10/21</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M3</span><span class="ml">Validation memo</span><span class="md">11/4</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M4</span><span class="ml">Section draft</span><span class="md">11/18</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">PR</span><span class="ml">Peer review</span><span class="md">11/24</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M5</span><span class="ml">Showcase</span><span class="md">11/30</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M6</span><span class="ml">Final package</span><span class="md">12/9</span></li></ol>
+<div class="cols">
+<section><h4>Delivered so far</h4><ul class="done"><li>Code verified: zero lift for a symmetric airfoil; within 0.2% of inviscid XFOIL at 350 panels, with a panel-count study</li><li>E387 at three Re: lift +12.5% vs NASA at Re = 2×10⁵, 4°</li><li>Pressure distribution compared with NASA TM-4062: shows the separation bubble an inviscid code cannot see</li><li>Digitized NASA pressure data and shared it with A3 (11/23)</li><li>S1223, SD7003 and SD7037 run; S1223 comparison moving to UIUC tunnel data</li></ul></section>
+<section><h4>How the extension evolved</h4><ul class="ext"><li><span class="d">10/23</span><span class="s">M1 proposal</span><span class="x">Flapped airfoils and blunt bodies</span></li><li><span class="d">10/26</span><span class="s">Narrowed</span><span class="x">Flap deflection only; blunt bodies dropped</span></li><li><span class="d">11/24</span><span class="s">Reduced</span><span class="x">Panel-method lift error vs camber for the four airfoils, by 12/9</span></li></ul></section>
+</div>
+<section class="next"><h4>Still to come (by 12/9)</h4><ul><li>S1223 vs UIUC data (A5 updated the files 11/24)</li><li>Trim the section to about 1.5 pages</li><li>Lift-error-vs-camber figure (extension)</li></ul></section>
+
+</article><article class="team" id="A2">
+<header><span class="tid">A2</span><div><h3>XFOIL and transition</h3><p class="tool">XFOIL (viscous panel method + boundary layer)</p></div></header>
+
+<p class="q"><span class="lbl">Question</span>How well does XFOIL predict low-Re lift and drag, and how sensitive is it to the transition setting Ncrit?</p>
+<p class="q"><span class="lbl">Journal club</span>Drela (1989), XFOIL: analysis and design for low-Re airfoils</p>
+<ol class="rail"><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M1</span><span class="ml">Proposal</span><span class="md">10/23</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M2</span><span class="ml">Journal club</span><span class="md">10/21</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M3</span><span class="ml">Validation memo</span><span class="md">11/4</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M4</span><span class="ml">Section draft</span><span class="md">11/18</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">PR</span><span class="ml">Peer review</span><span class="md">11/24</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M5</span><span class="ml">Showcase</span><span class="md">11/30</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M6</span><span class="ml">Final package</span><span class="md">12/9</span></li></ol>
+<div class="cols">
+<section><h4>Delivered so far</h4><ul class="done"><li>E387 at three Re with Ncrit = 9: lift +6.5%, drag −7.5% vs NASA at Re = 2×10⁵, 4°</li><li>Ncrit sweep 5 to 11 at all three Re; recommended settings shared with A6</li><li>S1223 at three Re compared with UIUC data; SD7003 polars and pressure distributions</li><li>Mach-sweep extension script and runs</li><li>Ncrit figure: drag and transition location vs angle at Re = 2×10⁵ for Ncrit 5–11 (11/25)</li></ul></section>
+<section><h4>How the extension evolved</h4><ul class="ext"><li><span class="d">10/23</span><span class="s">Proposed</span><span class="x">XFOIL on diamond airfoils at sonic speed (not valid for XFOIL)</span></li><li><span class="d">10/26</span><span class="s">Approved</span><span class="x">NACA 0012 Mach sweep vs NASA TM-81927</span></li><li><span class="d">11/22</span><span class="s">Status</span><span class="x">Sweep run; one short paragraph and figure</span></li></ul></section>
+</div>
+<section class="next"><h4>Still to come (by 12/9)</h4><ul><li>Fix the table layout and signs</li><li>Compare transition location with NASA&#x27;s bubble (separation 0.40, reattachment 0.62)</li><li>Finish the showcase slides</li></ul></section>
+
+</article><article class="team" id="A3">
+<header><span class="tid">A3</span><div><h3>Ansys Fluent</h3><p class="tool">RANS CFD: k-ω SST and transition SST (γ–Reθ)</p></div></header>
+
+<p class="q"><span class="lbl">Question</span>Does a CFD transition model capture the separation bubble that a fully turbulent model misses, and is it worth the cost?</p>
+<p class="q"><span class="lbl">Journal club</span>Langtry &amp; Menter (2009), correlation-based transition modeling</p>
+<ol class="rail"><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M1</span><span class="ml">Proposal</span><span class="md">10/23</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M2</span><span class="ml">Journal club</span><span class="md">11/4</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M3</span><span class="ml">Validation memo</span><span class="md">11/4</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M4</span><span class="ml">Section draft</span><span class="md">11/18</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">PR</span><span class="ml">Peer review</span><span class="md">11/24</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M5</span><span class="ml">Showcase</span><span class="md">12/2</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M6</span><span class="ml">Final package</span><span class="md">12/9</span></li></ol>
+<div class="cols">
+<section><h4>Delivered so far</h4><ul class="done"><li>Both models at 0, 4, 8 and 12° and three Re</li><li>Mesh study rebuilt with systematic refinement; drag converges (0.0169, 0.0167, 0.0166)</li><li>Headline: transition model within about 1% of NASA drag at Re = 2×10⁵, 0–4°; fully turbulent about 25% high</li><li>Shared mesh and settings with A4 for the code-to-code comparison</li><li>Pressure-distribution plots at three Re pushed to GitHub (11/23)</li></ul></section>
+<section><h4>How the extension evolved</h4><ul class="ext"><li><span class="d">10/23</span><span class="s">M1 proposal</span><span class="x">&quot;Mountain effect&quot;: higher turbulence, inflow angle, crossflow</span></li><li><span class="d">10/28</span><span class="s">Approved</span><span class="x">Inlet turbulence sweep 0.1/1/3/5% (crossflow dropped)</span></li><li><span class="d">11/22</span><span class="s">Reduced</span><span class="x">Turbulence 1% and 5% at 4°, Re = 2×10⁵</span></li></ul></section>
+</div>
+<section class="next"><h4>Still to come (by 12/9)</h4><ul><li>Signed percent differences against the data</li><li>Measured NASA pressure on the Cp figure</li><li>Turbulence runs at 1% and 5% (extension)</li></ul></section>
+
+</article><article class="team" id="A4">
+<header><span class="tid">A4</span><div><h3>STAR-CCM+</h3><p class="tool">RANS CFD in a second commercial code</p></div></header>
+
+<p class="q"><span class="lbl">Question</span>If two CFD codes run the same model on the same case, do they agree, and why or why not?</p>
+<p class="q"><span class="lbl">Journal club</span>Carreño Ruiz &amp; D’Ambrosio (2022), γ–Reθ at very low Re</p>
+<ol class="rail"><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M1</span><span class="ml">Proposal</span><span class="md">10/23</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M2</span><span class="ml">Journal club</span><span class="md">11/4</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M3</span><span class="ml">Validation memo</span><span class="md">11/4</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M4</span><span class="ml">Section draft</span><span class="md">11/18</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">PR</span><span class="ml">Peer review</span><span class="md">11/24</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M5</span><span class="ml">Showcase</span><span class="md">12/2</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M6</span><span class="ml">Final package</span><span class="md">12/9</span></li></ol>
+<div class="cols">
+<section><h4>Delivered so far</h4><ul class="done"><li>Switched from SU2 to STAR-CCM+ under time pressure; ran on A3&#x27;s mesh with matched settings</li><li>Fully turbulent SST at 0–12° and three Re</li><li>Finding: Fluent and STAR-CCM+ agree within 3–5% in drag at 4° and 8°; both 20–40% above the data, so the error is the model&#x27;s, not the code&#x27;s</li><li>Transition model at 0° and 4°, Re = 2×10⁵; wall y⁺ ≈ 0.4 average</li><li>Transition runs at other Re under way (15,000–25,000 iterations each, per the 11/25 slides)</li></ul></section>
+<section><h4>How the extension evolved</h4><ul class="ext"><li><span class="d">10/23</span><span class="s">M1 proposal</span><span class="x">Propeller or turbine</span></li><li><span class="d">11/2</span><span class="s">Revised</span><span class="x">Stall angles 8° and 12°</span></li><li><span class="d">11/9</span><span class="s">Decision</span><span class="x">8° and 12° count as core scope; no extension needed</span></li><li><span class="d">11/24</span><span class="s">Scope</span><span class="x">Transition model at 4° for all three Re; 8° optional</span></li></ul></section>
+</div>
+<section class="next"><h4>Still to come (by 12/9)</h4><ul><li>Transition model at 4° for Re = 1 and 3×10⁵</li><li>Report the transition drag with its mesh trend (not yet converged)</li><li>Fill the Results slides</li></ul></section>
+
+</article><article class="team" id="A5">
+<header><span class="tid">A5</span><div><h3>Reference data and NeuralFoil</h3><p class="tool">Wind-tunnel data (NASA, UIUC) + NeuralFoil</p></div></header>
+
+<p class="q"><span class="lbl">Question</span>How much do two wind tunnels disagree on the same airfoil, and how close does an ML tool trained on XFOIL get to either?</p>
+<p class="q"><span class="lbl">Journal club</span>NASA Langley (1988) and UIUC E387 data, plus NeuralFoil</p>
+<ol class="rail"><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M1</span><span class="ml">Proposal</span><span class="md">10/23</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M2</span><span class="ml">Journal club</span><span class="md">10/28</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M3</span><span class="ml">Validation memo</span><span class="md">11/4</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M4</span><span class="ml">Section draft</span><span class="md">11/18</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">PR</span><span class="ml">Peer review</span><span class="md">11/24</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M5</span><span class="ml">Showcase</span><span class="md">11/30</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M6</span><span class="ml">Final package</span><span class="md">12/9</span></li></ol>
+<div class="cols">
+<section><h4>Delivered so far</h4><ul class="done"><li>NASA and UIUC E387 data digitized at three Re, plus S1223; every team compares against these files</li><li>NASA vs UIUC comparison with quoted measurement uncertainty and tunnel turbulence</li><li>NeuralFoil for all four airfoils at three Re: lift +7.0%, drag −7.8% at Re = 2×10⁵, 4°</li><li>NeuralFoil flags the S1223 as unfamiliar (confidence 0.34)</li><li>Corrected NASA files on GitHub</li><li>Updated S1223 UIUC files at three Re on GitHub (11/24)</li></ul></section>
+<section><h4>How the extension evolved</h4><ul class="ext"><li><span class="d">10/23</span><span class="s">Approved</span><span class="x">Tunnel-to-tunnel consistency, NASA vs UIUC</span></li><li><span class="d">11/9</span><span class="s">Status</span><span class="x">Central to the paper: sets the experimental uncertainty floor</span></li></ul></section>
+</div>
+<section class="next"><h4>Still to come (by 12/9)</h4><ul><li>Tell A1 and A2 the S1223 files are updated</li><li>NeuralFoil values in the common results table</li><li>Signed percent differences</li></ul></section>
+
+</article><article class="team" id="A6">
+<header><span class="tid">A6</span><div><h3>Machine-learning surrogate</h3><p class="tool">Own neural network trained on XFOIL data</p></div></header>
+
+<p class="q"><span class="lbl">Question</span>How accurate is a neural-network surrogate on airfoils it has not seen, and can its uncertainty tell us when it is wrong?</p>
+<p class="q"><span class="lbl">Journal club</span>Anand (UMD), multi-fidelity neural network for rotorcraft airfoils</p>
+<ol class="rail"><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M1</span><span class="ml">Proposal</span><span class="md">10/23</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M2</span><span class="ml">Journal club</span><span class="md">11/18</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M3</span><span class="ml">Validation memo</span><span class="md">11/4</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M4</span><span class="ml">Section draft</span><span class="md">11/18</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">PR</span><span class="ml">Peer review</span><span class="md">11/24</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M5</span><span class="ml">Showcase</span><span class="md">11/30</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M6</span><span class="ml">Final package</span><span class="md">12/9</span></li></ol>
+<div class="cols">
+<section><h4>Delivered so far</h4><ul class="done"><li>Training set of about 1,080 airfoils at Re = 1–5×10⁵ (about 15 hours of XFOIL)</li><li>Network with ±2σ uncertainty bands</li><li>E387 fitted with four shape numbers (max error 0.88% of chord); lift +13.5% vs NASA, split into about 5 points from the shape fit and 1.6 from the network</li><li>S1223 stress case: the four-number shape folds through itself, so the description cannot represent this airfoil (11/24)</li><li>Network predictions for the S1223 plotted against UIUC data at three Re (11/25)</li></ul></section>
+<section><h4>How the extension evolved</h4><ul class="ext"><li><span class="d">10/23</span><span class="s">Approved</span><span class="x">Uncertainty estimate (ensemble or Gaussian process)</span></li><li><span class="d">11/9</span><span class="s">Kept</span><span class="x">Monte Carlo dropout with a ±2σ band</span></li></ul></section>
+</div>
+<section class="next"><h4>Still to come (by 12/9)</h4><ul><li>E387 predictions against NASA and UIUC data</li><li>Held-out error numbers for each network size</li><li>One paragraph on why the S1223 shape fails</li></ul></section>
+
+</article><article class="team" id="F1">
+<header><span class="tid">F1</span><div><h3>Formula SAE car (separate paper)</h3><p class="tool">Full-car RANS CFD in STAR-CCM+</p></div></header>
+
+<p class="q"><span class="lbl">Question</span>How well does steady RANS predict the drag and downforce of the Sun Devil Motorsports car measured in the Ford wind tunnel?</p>
+<p class="q"><span class="lbl">Journal club</span>Krusche (TU Dresden), 1:2-scale Formula Student car in a rolling-floor tunnel</p>
+<ol class="rail"><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M1</span><span class="ml">Proposal</span><span class="md">10/23</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M2</span><span class="ml">Journal club</span><span class="md">10/28</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M3</span><span class="ml">Validation memo</span><span class="md">11/4</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">M4</span><span class="ml">Section draft</span><span class="md">11/18</span></li><li class="ms done"><span class="dot" aria-hidden="true"></span><span class="mk">PR</span><span class="ml">Peer review</span><span class="md">11/24</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M5</span><span class="ml">Showcase</span><span class="md">12/2</span></li><li class="ms due"><span class="dot" aria-hidden="true"></span><span class="mk">M6</span><span class="ml">Final package</span><span class="md">12/9</span></li></ol>
+<div class="cols">
+<section><h4>Delivered so far</h4><ul class="done"><li>Full-car model, about 19 million cells; six-level mesh study converged</li><li>Drag +8.8% and downforce +39% vs the Ford tunnel at 35 mph</li><li>Two component-removal cases point to the front wing as the main source of extra downforce</li><li>Smoke and tuft comparisons with the tunnel</li></ul></section>
+<section><h4>How the extension evolved</h4><ul class="ext"><li><span class="d">10/23</span><span class="s">Approved</span><span class="x">Skidpad cornering as a stretch goal</span></li><li><span class="d">11/16</span><span class="s">Dropped</span><span class="x">Cornering and yaw dropped; straight-line case is the core</span></li></ul></section>
+</div>
+<section class="next"><h4>Still to come (by 12/9)</h4><ul><li>Signed differences for every configuration</li><li>State the floor boundary-layer treatment in the Method</li><li>Keep convergence separate from validation in the conclusions</li></ul></section>
+
+</article></div>
+</section>
+<footer>Status as of 25 November 2026, from Canvas submissions, the shared Drive and the team GitHub branches. Dr. VJ, SEMTE, ASU.</footer>
+</div></body></html>
